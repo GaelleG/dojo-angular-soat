@@ -18,11 +18,11 @@
 								<input type="text" placeholder="ID IMDb, titre, année" class="form-control"></input>
 							</div>
 							<div class="form-group">
-								<input type="text" placeholder="Titre" class="form-control"></input>
-								<input type="text" placeholder="Année" class="form-control"></input>
+								<input type="text" placeholder="Titre" class="form-control" ng-model="title"></input>
+								<input type="text" placeholder="Année" class="form-control" ng-model="year"></input>
 							</div>
 							<div class="form-group">
-								<input type="text" placeholder="ID IMDb" class="form-control"></input>
+								<input type="text" placeholder="ID IMDb" class="form-control" ng-model="id"></input>
 							</div>
 							<div>
 								<div class="form-group">
@@ -41,6 +41,18 @@
 									<div class="row">
 										<label class="col-md-3">champ</label>
 										<div class="col-md-9">valeur</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3">Titre</label>
+										<div class="col-md-9">{{title}}</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3">Année</label>
+										<div class="col-md-9">{{year}}</div>
+									</div>
+									<div class="row">
+										<label class="col-md-3">ID IMDb</label>
+										<div class="col-md-9">{{id}}</div>
 									</div>
 								</div>
 							</div>
