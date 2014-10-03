@@ -18,11 +18,11 @@
 								<input type="text" placeholder="ID IMDb, titre, année" class="form-control"></input>
 							</div>
 							<div class="form-group">
-								<input type="text" placeholder="Titre" class="form-control" ng-model="title"></input>
-								<input type="text" placeholder="Année" class="form-control" ng-model="year"></input>
+								<input type="text" placeholder="Titre" class="form-control" ng-model="title" ng-change="getMovie()"></input>
+								<input type="text" placeholder="Année" class="form-control" ng-model="year" ng-change="getMovie()"></input>
 							</div>
 							<div class="form-group">
-								<input type="text" placeholder="ID IMDb" class="form-control" ng-model="id"></input>
+								<input type="text" placeholder="ID IMDb" class="form-control" ng-model="id" ng-change="getMovie()"></input>
 							</div>
 							<div>
 								<div class="form-group">
@@ -43,16 +43,8 @@
 										<div class="col-md-9">valeur</div>
 									</div>
 									<div class="row">
-										<label class="col-md-3">Titre</label>
-										<div class="col-md-9">{{title}}</div>
-									</div>
-									<div class="row">
-										<label class="col-md-3">Année</label>
-										<div class="col-md-9">{{year}}</div>
-									</div>
-									<div class="row">
-										<label class="col-md-3">ID IMDb</label>
-										<div class="col-md-9">{{id}}</div>
+										<label class="col-md-3">Réponse</label>
+										<div class="col-md-9">{{response}}</div>
 									</div>
 								</div>
 							</div>
