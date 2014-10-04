@@ -36,15 +36,11 @@
 						</div>
 						<div class="col-md-8">
 							<div class="alert alert-danger" role="alert" ng-if="error">{{error}}</div>
-							<div class="panel panel-default">
+							<div class="panel panel-default" ng-if="response">
 								<div class="panel-body">
-									<div class="row">
-										<label class="col-md-3">champ</label>
-										<div class="col-md-9">valeur</div>
-									</div>
-									<div class="row">
-										<label class="col-md-3">Réponse</label>
-										<div class="col-md-9">{{response}}</div>
+									<div class="row" ng-repeat="k in movieKeys">
+										<label class="col-md-3">{{k}}</label>
+										<div class="col-md-9">{{response[k]}}</div>
 									</div>
 								</div>
 							</div>
