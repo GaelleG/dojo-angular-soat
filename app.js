@@ -38,6 +38,13 @@ app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
 		}
 	};
 
+	$scope.removeMovie = function () {
+		if ($scope.response === null) return;
+		if ($scope.moviesList.hasOwnProperty($scope.response.imdbID)) {
+			delete $scope.moviesList[$scope.response.imdbID];
+		}
+	};
+
 	$scope.isMovieInList = function () {
 		if ($scope.moviesList.hasOwnProperty($scope.response["imdbID"])) {
 			return true;
