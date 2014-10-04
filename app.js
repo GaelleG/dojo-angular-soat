@@ -9,10 +9,7 @@ app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
 	$scope.error = "";
 	$scope.movieKeys = [];
 
-	$scope.moviesList = {
-		"tt0022913": {imdbID: "tt0022913", Title: "Freaks", Year: "1932"},
-		"tt0062711": {imdbID: "tt0062711", Title: "Barbarella", Year: "1968"},
-	};
+	$scope.moviesList = {};
 	$scope.moviesListKeys = ["imdbID", "Title", "Year"];
 
 	$scope.getMovie = function () {
@@ -32,5 +29,21 @@ app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
 		.error(function (data, status) {
 			$scope.error = "Une erreur est survenue";
 		});
+	};
+
+	$scope.addMovie = function () {
+		if ($scope.response === null) return;
+		if ($scope.response.hasOwnProperty("imdbID")) {
+			$scope.moviesList[$scope.response.imdbID] = $scope.response;
+		}
+	};
+
+	$scope.isMovieInList = function () {
+		if ($scope.moviesList.hasOwnProperty($scope.response["imdbID"])) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	};
 }]);

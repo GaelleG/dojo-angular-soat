@@ -24,12 +24,12 @@
 							<div class="form-group">
 								<input type="text" placeholder="ID IMDb" class="form-control" ng-model="id" ng-change="getMovie()"></input>
 							</div>
-							<div>
-								<div class="form-group" ng-if="response && response.Poster != 'N/A'">
+							<div ng-if="response">
+								<div class="form-group" ng-if="response.Poster != 'N/A'">
 									<img ng-src="{{response.Poster}}" width="100%" class="img-square"/>
 								</div>
 								<div class="form-group">
-									<button type="button" class="btn btn-success btn-block">Je prends</button>
+									<button type="button" class="btn btn-success btn-block" ng-click="addMovie()" ng-if="!isMovieInList()">Je prends</button>
 									<button type="button" class="btn btn-danger btn-block">Je jette</button>
 								</div>
 							</div>
