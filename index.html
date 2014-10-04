@@ -50,10 +50,10 @@
 				<div class="col-md-4">
 					<table class="table table-striped">
 						<tr>
-							<th>header</th>
+							<th ng-repeat="k in moviesListKeys">{{k}}</th>
 						</tr>
-						<tr>
-							<td>film</td>
+						<tr ng-repeat="m in moviesList">
+							<td ng-repeat="k in moviesListKeys">{{m[k]}}</td>
 						</tr>
 					</table>
 				</div>

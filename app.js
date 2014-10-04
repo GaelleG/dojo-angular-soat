@@ -9,6 +9,12 @@ app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
 	$scope.error = "";
 	$scope.movieKeys = [];
 
+	$scope.moviesList = {
+		"tt0022913": {imdbID: "tt0022913", Title: "Freaks", Year: "1932"},
+		"tt0062711": {imdbID: "tt0062711", Title: "Barbarella", Year: "1968"},
+	};
+	$scope.moviesListKeys = ["imdbID", "Title", "Year"];
+
 	$scope.getMovie = function () {
 		$http.get('http://www.omdbapi.com/?t=' + $scope.title + '&y=' + $scope.year + '&i=' + $scope.id)
 		.success(function (data) {
