@@ -12,8 +12,32 @@ app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
 	$scope.moviesList = {};
 	$scope.moviesListKeys = ["imdbID", "Title", "Year"];
 
+	var requestTimeout = null;
 	$scope.getMovie = function () {
-		$http.get('http://www.omdbapi.com/?t=' + $scope.title + '&y=' + $scope.year + '&i=' + $scope.id)
+		clearTimeout(requestTimeout);
+		var urlParams = "";
+		if ($scope.id.length > 0) {
+			urlParams = "i=" + $scope.id;
+		}
+		if ($scope.title.length > 0) {
+			urlParams = "t=" + $scope.title;
+		}
+		if ($scope.year.length > 0) {
+			urlParams += "&y=" + $scope.year;
+		}
+		if (urlParams.length > 0) {
+			requestTimeout = setTimeout(function () {
+				$scope.getAPIResponse(urlParams);
+			}, 500);
+		}
+		else {
+			$scope.error = "";
+		}
+	};
+
+	$scope.getAPIResponse = function (urlParams) {
+		if (urlParams === undefined) return;
+		$http.get('http://www.omdbapi.com/?' + urlParams)
 		.success(function (data) {
 			if (data.Response == "False") {
 				$scope.error = data.Error;
