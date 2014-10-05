@@ -1,0 +1,637 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dojo-angular-soat by GaelleG</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Dojo-angular-soat</h1>
+        <p></p>
+
+        <p class="view"><a href="https://github.com/GaelleG/dojo-angular-soat">View the Project on GitHub <small>GaelleG/dojo-angular-soat</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/GaelleG/dojo-angular-soat/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/GaelleG/dojo-angular-soat/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/GaelleG/dojo-angular-soat">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="dojo-angularjs---soat" class="anchor" href="#dojo-angularjs---soat"><span class="octicon octicon-link"></span></a>Dojo AngularJS - Soat</h1>
+
+<h2>
+<a name="au-menu--recherche-et-r%C3%A9f%C3%A9rencement-de-films" class="anchor" href="#au-menu--recherche-et-r%C3%A9f%C3%A9rencement-de-films"><span class="octicon octicon-link"></span></a>Au menu : recherche et référencement de films</h2>
+
+<ul>
+<li><a href="#template">Template</a></li>
+<li><a href="#module">Module AngularJS</a></li>
+<li><a href="#controller">Contrôleur AngularJS</a></li>
+<li><a href="#scope">$scope : liaison et affichage</a></li>
+<li><a href="#http">$http : requête vers l’API OMDb</a></li>
+<li><a href="#errors">Affichage des erreurs</a></li>
+<li><a href="#movie">Affichage du film</a></li>
+<li><a href="#poster">Affichage de l’affiche du film</a></li>
+<li><a href="#list">Affichage de la liste de films</a></li>
+<li><a href="#add">Ajout du film dans la liste</a></li>
+<li><a href="#remove">Suppression du film de la liste</a></li>
+<li><a href="#limitation">Limitation de l’envoi de requêtes</a></li>
+</ul><p>Chaque étape correspond à un commit.</p>
+
+<p>Ce projet utilise la version 1.2.26 d’AngularJS ainsi que la version 3.2.0 de Bootstrap et se connecte à l’API OMDb <a href="http://www.omdbapi.com/">http://www.omdbapi.com/</a>. </p>
+
+<h2>
+<a name="template" class="anchor" href="#template"><span class="octicon octicon-link"></span></a>Template<a name="template"></a>
+</h2>
+
+<pre><code>index.html
+bootstrap.min.css
+</code></pre>
+
+<h2>
+<a name="module-angularjs" class="anchor" href="#module-angularjs"><span class="octicon octicon-link"></span></a>Module AngularJS<a name="module"></a>
+</h2>
+
+<pre><code>index.html
+bootstrap.min.css
+angular.min.js
+app.js
+</code></pre>
+
+<h3>
+<a name="indexhtml" class="anchor" href="#indexhtml"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<h4>
+<a name="chargement-des-fichiers-js" class="anchor" href="#chargement-des-fichiers-js"><span class="octicon octicon-link"></span></a>Chargement des fichiers JS</h4>
+
+<pre><code>&lt;body&gt;
+    ...
+    &lt;script type="text/javascript" src="angular.min.js"&gt;&lt;/script&gt;
+    &lt;script type="text/javascript" src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+
+<h4>
+<a name="d%C3%A9claration-du-point-dentr%C3%A9e-de-lapplication-angularjs" class="anchor" href="#d%C3%A9claration-du-point-dentr%C3%A9e-de-lapplication-angularjs"><span class="octicon octicon-link"></span></a>Déclaration du point d’entrée de l’application AngularJS</h4>
+
+<pre><code>&lt;body ng-app="dojo"&gt;
+    ...
+&lt;/body&gt;
+</code></pre>
+
+<h3>
+<a name="appjs" class="anchor" href="#appjs"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<pre><code>var app = angular.module('dojo',[]);
+</code></pre>
+
+<h2>
+<a name="contr%C3%B4leur-angularjs" class="anchor" href="#contr%C3%B4leur-angularjs"><span class="octicon octicon-link"></span></a>Contrôleur AngularJS<a name="controller"></a>
+</h2>
+
+<h3>
+<a name="indexhtml-1" class="anchor" href="#indexhtml-1"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<pre><code>&lt;body ng-app="dojo"&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="header"&gt;
+            &lt;h1&gt;Check ton film&lt;/h1&gt;
+        &lt;/div&gt;
+        &lt;div class="row" ng-controller="MovieController"&gt;
+            ...
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+
+<h3>
+<a name="appjs-1" class="anchor" href="#appjs-1"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<pre><code>app.controller('MovieController', [function () {
+
+}]);
+</code></pre>
+
+<h2>
+<a name="scope--liaison-et-affichage" class="anchor" href="#scope--liaison-et-affichage"><span class="octicon octicon-link"></span></a>$scope : liaison et affichage<a name="scope"></a>
+</h2>
+
+<h3>
+<a name="indexhtml-2" class="anchor" href="#indexhtml-2"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<h4>
+<a name="liaison-entre-une-propri%C3%A9t%C3%A9-du-contr%C3%B4leur-et-un-champ-du-formulaire" class="anchor" href="#liaison-entre-une-propri%C3%A9t%C3%A9-du-contr%C3%B4leur-et-un-champ-du-formulaire"><span class="octicon octicon-link"></span></a>Liaison entre une propriété du contrôleur et un champ du formulaire</h4>
+
+<pre><code>&lt;div class="form-group"&gt;
+    &lt;input type="text" placeholder="Titre" class="form-control" ng-model="title"&gt;&lt;/input&gt;
+    &lt;input type="text" placeholder="Année" class="form-control" ng-model="year"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+    &lt;input type="text" placeholder="ID IMDb" class="form-control" ng-model="id"&gt;&lt;/input&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h4>
+<a name="affichage-dune-propri%C3%A9t%C3%A9-du-contr%C3%B4leur" class="anchor" href="#affichage-dune-propri%C3%A9t%C3%A9-du-contr%C3%B4leur"><span class="octicon octicon-link"></span></a>Affichage d’une propriété du contrôleur</h4>
+
+<pre><code>&lt;div class="panel-body"&gt;
+    &lt;div class="row"&gt;
+        &lt;label class="col-md-3"&gt;champ&lt;/label&gt;
+        &lt;div class="col-md-9"&gt;valeur&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;label class="col-md-3"&gt;Titre&lt;/label&gt;
+        &lt;div class="col-md-9"&gt;{{title}}&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;label class="col-md-3"&gt;Année&lt;/label&gt;
+        &lt;div class="col-md-9"&gt;{{year}}&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;label class="col-md-3"&gt;ID IMDb&lt;/label&gt;
+        &lt;div class="col-md-9"&gt;{{id}}&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3>
+<a name="appjs-2" class="anchor" href="#appjs-2"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<pre><code>app.controller('MovieController', ['$scope', function ($scope) {
+    $scope.title = "";
+    $scope.year = "";
+    $scope.id = "";
+}]);
+</code></pre>
+
+<h2>
+<a name="http--requ%C3%AAte-vers-lapi-omdb" class="anchor" href="#http--requ%C3%AAte-vers-lapi-omdb"><span class="octicon octicon-link"></span></a>$http : requête vers l’API OMDb<a name="http"></a>
+</h2>
+
+<h3>
+<a name="appjs-3" class="anchor" href="#appjs-3"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<h4>
+<a name="requ%C3%AAte-get" class="anchor" href="#requ%C3%AAte-get"><span class="octicon octicon-link"></span></a>Requête get</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $http.get('http://www.omdbapi.com/?t=' + $scope.title + '&amp;y=' + $scope.year + '&amp;i=' + $scope.id)
+    .success(function(data) {
+        console.log("success", data);
+    })
+    .error(function(data) {
+        console.log("error", data);
+    });
+}]);
+</code></pre>
+
+<h4>
+<a name="cr%C3%A9ation-dune-fonction-qui-contient-la-requ%C3%AAte" class="anchor" href="#cr%C3%A9ation-dune-fonction-qui-contient-la-requ%C3%AAte"><span class="octicon octicon-link"></span></a>Création d’une fonction qui contient la requête</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.getMovie = function () {
+        $http.get('http://www.omdbapi.com/?t=' + $scope.title + '&amp;y=' + $scope.year + '&amp;i=' + $scope.id)
+        .success(function(data) {
+            console.log("success", data);
+        })
+        .error(function(data) {
+            console.log("error", data);
+        });
+    };
+}]);
+</code></pre>
+
+<h4>
+<a name="variable-de-stockage-de-la-r%C3%A9ponse" class="anchor" href="#variable-de-stockage-de-la-r%C3%A9ponse"><span class="octicon octicon-link"></span></a>Variable de stockage de la réponse</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.response = {};
+
+    $scope.getMovie = function () {
+        $http.get('http://www.omdbapi.com/?t=' + $scope.title + '&amp;y=' + $scope.year + '&amp;i=' + $scope.id)
+        .success(function(data) {
+            $scope.response = data;
+        })
+        .error(function(data) {
+            $scope.response = data;
+        });
+    };
+}]);
+</code></pre>
+
+<h3>
+<a name="indexhtml-3" class="anchor" href="#indexhtml-3"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<h4>
+<a name="appel-de-la-fonction-lorsquun-champ-est-modifi%C3%A9" class="anchor" href="#appel-de-la-fonction-lorsquun-champ-est-modifi%C3%A9"><span class="octicon octicon-link"></span></a>Appel de la fonction lorsqu’un champ est modifié</h4>
+
+<pre><code>&lt;div class="form-group"&gt;
+    &lt;input type="text" placeholder="Titre" class="form-control" ng-model="title" ng-change="getMovie()"&gt;&lt;/input&gt;
+    &lt;input type="text" placeholder="Année" class="form-control" ng-model="year" ng-change="getMovie()"&gt;&lt;/input&gt;
+&lt;/div&gt;
+&lt;div class="form-group"&gt;
+    &lt;input type="text" placeholder="ID IMDb" class="form-control" ng-model="id" ng-change="getMovie()"&gt;&lt;/input&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h4>
+<a name="affichage-de-la-r%C3%A9ponse" class="anchor" href="#affichage-de-la-r%C3%A9ponse"><span class="octicon octicon-link"></span></a>Affichage de la réponse</h4>
+
+<pre><code>&lt;div class="panel-body"&gt;
+    &lt;div class="row"&gt;
+        &lt;label class="col-md-3"&gt;champ&lt;/label&gt;
+        &lt;div class="col-md-9"&gt;valeur&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;label class="col-md-3"&gt;Réponse&lt;/label&gt;
+        &lt;div class="col-md-9"&gt;{{response}}&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h2>
+<a name="affichage-des-erreurs" class="anchor" href="#affichage-des-erreurs"><span class="octicon octicon-link"></span></a>Affichage des erreurs<a name="errors"></a>
+</h2>
+
+<h3>
+<a name="appjs-4" class="anchor" href="#appjs-4"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<h4>
+<a name="erreur-dans-le-callback-error" class="anchor" href="#erreur-dans-le-callback-error"><span class="octicon octicon-link"></span></a>Erreur dans le callback ‘error’</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.response = {};
+    $scope.error = "";
+
+    $scope.getMovie = function () {
+        $http.get(...)
+        .success(function(data) {
+            $scope.response = data;
+        })
+        .error(function(data) {
+            $scope.error = "Une erreur est survenue";
+        });
+    };
+}]);
+</code></pre>
+
+<h4>
+<a name="erreur-retourn%C3%A9e-par-lapi" class="anchor" href="#erreur-retourn%C3%A9e-par-lapi"><span class="octicon octicon-link"></span></a>Erreur retournée par l’API</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.getMovie = function () {
+        $http.get(...)
+        .success(function(data) {
+            if (data.Response == "False") {
+                $scope.error = data.Error;
+                $scope.response = {};
+            }
+            else {
+                $scope.error = "";
+                $scope.response = data;
+            }
+        })
+        .error(function(data) {
+            $scope.error = "Une erreur est survenue";
+        });
+    };
+}]);
+</code></pre>
+
+<h3>
+<a name="indexhtml-4" class="anchor" href="#indexhtml-4"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<pre><code>&lt;div class="alert alert-danger" role="alert" ng-if="error"&gt;{{error}}&lt;/div&gt;
+</code></pre>
+
+<h2>
+<a name="affichage-du-film" class="anchor" href="#affichage-du-film"><span class="octicon octicon-link"></span></a>Affichage du film<a name="movie"></a>
+</h2>
+
+<h3>
+<a name="appjs-5" class="anchor" href="#appjs-5"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.response = null;
+    $scope.error = "";
+    $scope.movieKeys = [];
+
+    $scope.getMovie = function () {
+        $http.get(...)
+        .success(function(data) {
+            if (data.Response == "False") {
+                ...
+                $scope.response = null;
+                $scope.movieKeys = [];
+            }
+            else {
+                ...
+                $scope.movieKeys = Object.keys(data);
+            }
+        })
+        ...
+    };
+}]);
+</code></pre>
+
+<h3>
+<a name="indexhtml-5" class="anchor" href="#indexhtml-5"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<pre><code>&lt;div class="panel panel-default" ng-if="response"&gt;
+    &lt;div class="panel-body"&gt;
+        &lt;div class="row" ng-repeat="k in movieKeys"&gt;
+            &lt;label class="col-md-3"&gt;{{k}}&lt;/label&gt;
+            &lt;div class="col-md-9"&gt;{{response[k]}}&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h3>
+<a name="remarque" class="anchor" href="#remarque"><span class="octicon octicon-link"></span></a>Remarque</h3>
+
+<p>Pour afficher les propriétés de l’objet dans leur ordre initial, on récupère leur clé dans un tableau qu’on parcourt ensuite. Si on parcourt un objet directement, les propriétés seront classées (par ordre alphabétique par défaut).</p>
+
+<h2>
+<a name="affichage-de-laffiche-du-film" class="anchor" href="#affichage-de-laffiche-du-film"><span class="octicon octicon-link"></span></a>Affichage de l’affiche du film<a name="poster"></a>
+</h2>
+
+<h3>
+<a name="indexhtml-6" class="anchor" href="#indexhtml-6"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<h4>
+<a name="affichage-de-limage" class="anchor" href="#affichage-de-limage"><span class="octicon octicon-link"></span></a>Affichage de l’image</h4>
+
+<pre><code>&lt;div class="form-group" ng-if="response &amp;&amp; response.Poster != 'N/A'"&gt;
+    &lt;img ng-src="{{response.Poster}}" width="100%" class="img-square"/&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h4>
+<a name="propri%C3%A9t%C3%A9-non-affich%C3%A9e" class="anchor" href="#propri%C3%A9t%C3%A9-non-affich%C3%A9e"><span class="octicon octicon-link"></span></a>Propriété non affichée</h4>
+
+<pre><code>&lt;div class="panel-body"&gt;
+    &lt;div class="row" ng-repeat="k in movieKeys" ng-if="k != 'Poster'"&gt;
+        &lt;label class="col-md-3"&gt;{{k}}&lt;/label&gt;
+        &lt;div class="col-md-9"&gt;{{response[k]}}&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h2>
+<a name="affichage-de-la-liste-de-films" class="anchor" href="#affichage-de-la-liste-de-films"><span class="octicon octicon-link"></span></a>Affichage de la liste de films<a name="list"></a>
+</h2>
+
+<h3>
+<a name="appjs-6" class="anchor" href="#appjs-6"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+
+    $scope.moviesList = {
+        "tt0022913": {imdbID: "tt0022913", Title: "Freaks", Year: "1932"},
+        "tt0062711": {imdbID: "tt0062711", Title: "Barbarella", Year: "1968"},
+    };
+    $scope.moviesListKeys = ["imdbID", "Title", "Year"];
+
+    $scope.getMovie = function () {
+        ...
+    };
+}]);
+</code></pre>
+
+<h3>
+<a name="indexhtml-7" class="anchor" href="#indexhtml-7"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<pre><code>&lt;table class="table table-striped"&gt;
+    &lt;tr&gt;
+        &lt;th ng-repeat="k in moviesListKeys"&gt;{{k}}&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr ng-repeat="m in moviesList"&gt;
+        &lt;td ng-repeat="k in moviesListKeys"&gt;{{m[k]}}&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+
+<h2>
+<a name="ajout-du-film-dans-la-liste" class="anchor" href="#ajout-du-film-dans-la-liste"><span class="octicon octicon-link"></span></a>Ajout du film dans la liste<a name="add"></a>
+</h2>
+
+<h3>
+<a name="appjs-7" class="anchor" href="#appjs-7"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<h4>
+<a name="fonction-dajout-du-film" class="anchor" href="#fonction-dajout-du-film"><span class="octicon octicon-link"></span></a>Fonction d’ajout du film</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.moviesList = {};
+    ...
+
+    $scope.addMovie = function () {
+        if ($scope.response === null) return;
+        if ($scope.response.hasOwnProperty("imdbID")) {
+            $scope.moviesList[$scope.response.imdbID] = $scope.response;
+        }
+    };
+}]);
+</code></pre>
+
+<h4>
+<a name="fonction-de-v%C3%A9rification-de-la-pr%C3%A9sence-du-film-dans-la-liste" class="anchor" href="#fonction-de-v%C3%A9rification-de-la-pr%C3%A9sence-du-film-dans-la-liste"><span class="octicon octicon-link"></span></a>Fonction de vérification de la présence du film dans la liste</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+
+    $scope.isMovieInList = function () {
+        if ($scope.moviesList.hasOwnProperty($scope.response["imdbID"])) {
+            return true;    
+        }
+        else {
+            return false;
+        }
+    };
+}]);
+</code></pre>
+
+<h3>
+<a name="indexhtml-8" class="anchor" href="#indexhtml-8"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<h4>
+<a name="affichage-des-boutons-uniquement-si-un-film-a-%C3%A9t%C3%A9-trouv%C3%A9" class="anchor" href="#affichage-des-boutons-uniquement-si-un-film-a-%C3%A9t%C3%A9-trouv%C3%A9"><span class="octicon octicon-link"></span></a>Affichage des boutons uniquement si un film a été trouvé</h4>
+
+<pre><code>&lt;div ng-if="response"&gt;
+    &lt;div class="form-group" ng-if="response.Poster != 'N/A'"&gt;
+        &lt;img ng-src="{{response.Poster}}" width="100%" class="img-square"/&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group"&gt;
+        &lt;button type="button" class="btn btn-success btn-block"&gt;Je prends&lt;/button&gt;
+        &lt;button type="button" class="btn btn-danger btn-block"&gt;Je jette&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<h4>
+<a name="appel-de-la-fonction-dajout" class="anchor" href="#appel-de-la-fonction-dajout"><span class="octicon octicon-link"></span></a>Appel de la fonction d’ajout</h4>
+
+<pre><code>&lt;button type="button" class="btn btn-success btn-block" ng-click="addMovie()"&gt;Je prends&lt;/button&gt;
+</code></pre>
+
+<h4>
+<a name="affichage-du-bouton-dajout-uniquement-si-le-film-nest-pas-dans-la-liste" class="anchor" href="#affichage-du-bouton-dajout-uniquement-si-le-film-nest-pas-dans-la-liste"><span class="octicon octicon-link"></span></a>Affichage du bouton d’ajout uniquement si le film n’est pas dans la liste</h4>
+
+<pre><code>&lt;button type="button" class="btn btn-success btn-block" ng-click="addMovie()" ng-if="!isMovieInList()"&gt;Je prends&lt;/button&gt;
+</code></pre>
+
+<h2>
+<a name="suppression-du-film-de-la-liste" class="anchor" href="#suppression-du-film-de-la-liste"><span class="octicon octicon-link"></span></a>Suppression du film de la liste<a name="remove"></a>
+</h2>
+
+<h3>
+<a name="appjs-8" class="anchor" href="#appjs-8"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.addMovie = function () {...};
+
+    $scope.removeMovie = function () {
+        if ($scope.response === null) return;
+        if ($scope.moviesList.hasOwnProperty($scope.response.imdbID)) {
+            delete $scope.moviesList[$scope.response.imdbID];
+        }
+    };
+    ...
+}]);
+</code></pre>
+
+<h3>
+<a name="indexhtml-9" class="anchor" href="#indexhtml-9"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<h4>
+<a name="appel-de-la-fonction-de-suppression" class="anchor" href="#appel-de-la-fonction-de-suppression"><span class="octicon octicon-link"></span></a>Appel de la fonction de suppression</h4>
+
+<pre><code>&lt;button type="button" class="btn btn-danger btn-block" ng-click="removeMovie()"&gt;Je jette&lt;/button&gt;
+</code></pre>
+
+<h4>
+<a name="affichage-du-bouton-de-suppression-uniquement-si-le-film-est-dans-la-liste" class="anchor" href="#affichage-du-bouton-de-suppression-uniquement-si-le-film-est-dans-la-liste"><span class="octicon octicon-link"></span></a>Affichage du bouton de suppression uniquement si le film est dans la liste</h4>
+
+<pre><code>&lt;button type="button" class="btn btn-danger btn-block" ng-click="removeMovie()" ng-if="isMovieInList()"&gt;Je jette&lt;/button&gt;
+</code></pre>
+
+<h2>
+<a name="limitation-de-lenvoi-de-requ%C3%AAtes" class="anchor" href="#limitation-de-lenvoi-de-requ%C3%AAtes"><span class="octicon octicon-link"></span></a>Limitation de l’envoi de requêtes<a name="limitation"></a>
+</h2>
+
+<h3>
+<a name="appjs-9" class="anchor" href="#appjs-9"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<h4>
+<a name="requ%C3%AAte-envoy%C3%A9e-uniquement-si-des-informations-ont-%C3%A9t%C3%A9-saisies" class="anchor" href="#requ%C3%AAte-envoy%C3%A9e-uniquement-si-des-informations-ont-%C3%A9t%C3%A9-saisies"><span class="octicon octicon-link"></span></a>Requête envoyée uniquement si des informations ont été saisies</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.getMovie = function () {
+        var urlParams = "";
+        if ($scope.id.length &gt; 0) {
+            urlParams = "i=" + $scope.id;
+        }
+        if ($scope.title.length &gt; 0) {
+            urlParams = "t=" + $scope.title;
+        }
+        if ($scope.year.length &gt; 0) {
+            urlParams += "&amp;y=" + $scope.year;
+        }
+        if (urlParams.length &gt; 0) {
+            // envoi de requête
+        }
+        else {
+            $scope.error = "";
+        }
+    };
+    ...
+}]);
+</code></pre>
+
+<h4>
+<a name="envoi-des-param%C3%A8tres-renseign%C3%A9s-uniquement" class="anchor" href="#envoi-des-param%C3%A8tres-renseign%C3%A9s-uniquement"><span class="octicon octicon-link"></span></a>Envoi des paramètres renseignés uniquement</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    $scope.getMovie = function () {
+        ...
+        if (urlParams.length &gt; 0) {
+            $scope.getAPIResponse(urlParams);
+        }
+        ...
+    };
+
+    $scope.getAPIResponse = function (urlParams) {
+        if (urlParams === undefined) return;
+        $http.get('http://www.omdbapi.com/?' + urlParams)
+        .success(function (data) {
+            if (data.Response == "False") {
+                $scope.error = data.Error;
+                $scope.response = null;
+                $scope.movieKeys = [];
+            }
+            else {
+                $scope.error = "";
+                $scope.response = data;
+                $scope.movieKeys = Object.keys(data);
+            }
+        })
+        .error(function (data, status) {
+            $scope.error = "Une erreur est survenue";
+        });
+    };
+    ...
+}]);
+</code></pre>
+
+<h4>
+<a name="d%C3%A9lai-entre-la-fin-de-la-saisie-et-le-lancement-de-la-requ%C3%AAte" class="anchor" href="#d%C3%A9lai-entre-la-fin-de-la-saisie-et-le-lancement-de-la-requ%C3%AAte"><span class="octicon octicon-link"></span></a>Délai entre la fin de la saisie et le lancement de la requête</h4>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    ...
+    var requestTimeout = null;
+    $scope.getMovie = function () {
+        clearTimeout(requestTimeout);
+        ...
+        if (urlParams.length &gt; 0) {
+            requestTimeout = setTimeout(function () {
+                $scope.getAPIResponse(urlParams);
+            }, 500);
+        }
+        ...
+    };
+    ...
+}]);
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/GaelleG">GaelleG</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
