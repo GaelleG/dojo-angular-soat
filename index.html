@@ -47,6 +47,7 @@
 <li><a href="#add">Ajout du film dans la liste</a></li>
 <li><a href="#remove">Suppression du film de la liste</a></li>
 <li><a href="#limitation">Limitation de l’envoi de requêtes</a></li>
+<li><a href="#watch">$watch : champ de recherche unique</a></li>
 </ul><p>Chaque étape correspond à un commit.</p>
 
 <p>Ce projet utilise la version 1.2.26 d’AngularJS ainsi que la version 3.2.0 de Bootstrap et se connecte à l’API OMDb <a href="http://www.omdbapi.com/">http://www.omdbapi.com/</a>. </p>
@@ -622,6 +623,98 @@ app.js
         }
         ...
     };
+    ...
+}]);
+</code></pre>
+
+<h2>
+<a name="watch--champ-de-recherche-unique" class="anchor" href="#watch--champ-de-recherche-unique"><span class="octicon octicon-link"></span></a>$watch : champ de recherche unique<a name="watch"></a>
+</h2>
+
+<h3>
+<a name="indexhtml-10" class="anchor" href="#indexhtml-10"><span class="octicon octicon-link"></span></a>index.html</h3>
+
+<pre><code>&lt;input type="text" placeholder="ID IMDb, titre, année" class="form-control" ng-model="meltedProperties"&gt;&lt;/input&gt;
+</code></pre>
+
+<h3>
+<a name="appjs-10" class="anchor" href="#appjs-10"><span class="octicon octicon-link"></span></a>app.js</h3>
+
+<pre><code>app.controller('MovieController', ['$scope', '$http', function ($scope, $http) {
+    $scope.title = "";
+    $scope.year = "";
+    $scope.id = "";
+    $scope.meltedProperties = "";
+    ...
+    $scope.getMovie = function () {...};
+
+    $scope.$watch('meltedProperties', function() {
+        if ($scope.meltedProperties.length == 0) {
+            $scope.title = "";
+            $scope.year = "";
+            $scope.id = "";
+            $scope.error = "";
+            return;
+        }
+
+        var melted = $scope.meltedProperties;
+
+        var strRegexIMDbID = "tt(\\d+)";
+        var regexIMDbID = new RegExp(strRegexIMDbID);
+        var strRegexYear = "(19|20)(\\d){2}";
+        var regexYear = new RegExp(strRegexYear);
+
+        var regexIMDbIDWithSeparator = new RegExp(
+            "(^" + strRegexIMDbID + "$)" + "|" +
+            "(((\\W|\\s)+)" + strRegexIMDbID + "$)" + "|" +
+            "(^" + strRegexIMDbID + "(((\\W|\\s)+)))" + "|" +
+            "(^" + strRegexYear + "((\\W|\\s)+)" + strRegexIMDbID + "((\\W|\\s)+)(\\D+)$)" + "|" +
+            "(^(\\D+)((\\W|\\s)+)" + strRegexIMDbID + "((\\W|\\s)+)" + strRegexYear + "$)");
+        var regexYearWithSeparator = new RegExp(
+            "(^" + strRegexYear + "((\\W|\\s)+))" + "|" +
+            "(((\\W|\\s)+)" + strRegexYear + "$)");
+
+        if (regexIMDbIDWithSeparator.test(melted)) {
+            $scope.id = melted.match(regexIMDbID)[0];
+            melted = melted.replace($scope.id, "");
+            while ((/^(\W|\s)+/).test(melted)) {
+                melted = melted.substring(1, melted.length);
+            }
+            while ((/(\W|\s)+$/).test(melted)) {
+                melted = melted.substring(0, melted.length-1);
+            }
+        }
+        else {
+            $scope.id = "";
+        }
+
+        if (regexYearWithSeparator.test(melted)) {
+            var s = melted;
+            while (regexYearWithSeparator.test(s)) {
+                $scope.year = s.match(regexYear)[0];
+                s = s.replace($scope.year, "");
+            }
+            melted = melted.replace($scope.year, "");
+            while ((/^(\W|\s)+/).test(melted)) {
+                melted = melted.substring(1, melted.length);
+            }
+            while ((/(\W|\s)+$/).test(melted)) {
+                melted = melted.substring(0, melted.length-1);
+            }
+        }
+        else {
+            $scope.year = "";
+        }
+
+        if (melted.length &gt; 0) {
+            $scope.title = melted;
+        }
+        else {
+            $scope.title = "";
+        }
+
+        $scope.getMovie();
+    });
     ...
 }]);
 </code></pre>
